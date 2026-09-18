@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Mini Voting App</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-[#0b0f19] text-white min-h-screen flex items-center justify-center p-4">
+
+  <div class="w-full max-w-4xl space-y-6">
+    <!-- Header -->
+    <header class="text-center space-y-2">
+      <div class="flex items-center justify-center gap-2 text-3xl font-bold">
+        <span>🧊</span>
+        <h1>Mini Voting App</h1>
+      </div>
+      <p class="text-gray-400 text-sm">What should we build next? 🚀</p>
+    </header>
+
+    <!-- Candidate Cards Grid -->
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+      
+      <!-- Card 1: Mini Game -->
+      <div class="bg-[#161c2e] border border-gray-800 rounded-2xl p-6 flex flex-col items-center text-center space-y-4">
+        <!-- Tambahkan id dan class inline-block -->
+        <div id="iconGame" class="text-5xl my-2 inline-block transition-transform duration-300">🎮</div>
+        <h2 class="text-xl font-semibold">Mini Game</h2>
+        <p class="text-sm font-medium text-gray-300">
+          Votes: <span id="votesGame" class="inline-block transition-transform duration-150">20</span>
+        </p>
+        <button id="btnVoteGame" class="w-full bg-[#635BFF] hover:bg-[#5248ff] active:scale-95 text-white font-medium py-2 px-4 rounded-xl transition duration-150 shadow-md">
+          Vote 🎮
+        </button>
+      </div>
+
+      <!-- Card 2: Mini Store -->
+      <div class="bg-[#161c2e] border border-gray-800 rounded-2xl p-6 flex flex-col items-center text-center space-y-4">
+        <div id="iconStore" class="text-5xl my-2 inline-block transition-transform duration-300">🛒</div>
+        <h2 class="text-xl font-semibold">Mini Store</h2>
+        <p class="text-sm font-medium text-gray-300">
+          Votes: <span id="votesStore" class="inline-block transition-transform duration-150">19</span>
+        </p>
+        <button id="btnVoteStore" class="w-full bg-[#635BFF] hover:bg-[#5248ff] active:scale-95 text-white font-medium py-2 px-4 rounded-xl transition duration-150 shadow-md">
+          Vote 🛒
+        </button>
+      </div>
+
+      <!-- Card 3: To-Do App -->
+      <div class="bg-[#161c2e] border border-gray-800 rounded-2xl p-6 flex flex-col items-center text-center space-y-4">
+        <div id="iconTodo" class="text-5xl my-2 inline-block transition-transform duration-300">📝</div>
+        <h2 class="text-xl font-semibold">To-Do App</h2>
+        <p class="text-sm font-medium text-gray-300">
+          Votes: <span id="votesTodo" class="inline-block transition-transform duration-150">18</span>
+        </p>
+        <button id="btnVoteTodo" class="w-full bg-[#635BFF] hover:bg-[#5248ff] active:scale-95 text-white font-medium py-2 px-4 rounded-xl transition duration-150 shadow-md">
+          Vote 📝
+        </button>
+      </div>
+
+      <!-- Card 4: Quiz App -->
+      <div class="bg-[#161c2e] border border-gray-800 rounded-2xl p-6 flex flex-col items-center text-center space-y-4">
+        <div id="iconQuiz" class="text-5xl my-2 inline-block transition-transform duration-300">🧠</div>
+        <h2 class="text-xl font-semibold">Quiz App</h2>
+        <p class="text-sm font-medium text-gray-300">
+          Votes: <span id="votesQuiz" class="inline-block transition-transform duration-150">16</span>
+        </p>
+        <button id="btnVoteQuiz" class="w-full bg-[#635BFF] hover:bg-[#5248ff] active:scale-95 text-white font-medium py-2 px-4 rounded-xl transition duration-150 shadow-md">
+          Vote 🧠
+        </button>
+      </div>
+
+    </div>
+
+    <!-- Total Votes, Feedback & Reset Section -->
+    <div class="bg-[#161c2e] border border-gray-800 rounded-2xl p-6 text-center space-y-4">
+      <h3 class="text-2xl font-bold">
+        Total Votes: <span id="totalVotes" class="inline-block transition-transform duration-150 text-indigo-400">73</span>
+      </h3>
+      
+      <div id="feedbackMsg" class="bg-[#1c2438] text-gray-300 text-sm py-2 px-4 rounded-xl max-w-md mx-auto">
+        ✅ Kamu memilih To-Do App 📝
+      </div>
+
+      <div class="pt-2">
+        <button id="resetBtn" class="bg-red-500/10 hover:bg-red-500/20 active:scale-95 text-red-400 text-xs font-semibold py-2 px-4 rounded-xl border border-red-500/30 transition duration-150">
+          🔄 Reset Voting
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <script src="bulanan.js" defer></script>
+</body>
+</html>

@@ -1,0 +1,318 @@
+<!doctype html>
+<html lang="id">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>HSI Student Management</title>
+    <style>
+      * {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+        font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+      }
+
+      /* Mengunci tinggi halaman agar 100% pas dengan layar tanpa scroll luar */
+      body {
+        background-color: #ffffff;
+        color: #1f2937;
+        padding: 20px;
+        height: 100vh;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        overflow: hidden;
+      }
+
+      .container {
+        width: 100%;
+        max-width: 1000px;
+        height: 90vh;
+        display: flex;
+        flex-direction: column;
+        gap: 16px;
+      }
+
+      header {
+        text-align: center;
+      }
+
+      header h1 {
+        font-size: 1.8rem;
+        color: #4f46e5;
+      }
+
+      header p {
+        color: #6b7280;
+        font-size: 0.9rem;
+      }
+
+      /* Alert Styling */
+      .alert {
+        padding: 10px 14px;
+        border-radius: 8px;
+        font-size: 0.9rem;
+        font-weight: 500;
+        animation: fadeIn 0.3s ease-in-out;
+      }
+
+      .alert-success {
+        background-color: #ecfdf5;
+        border: 1px solid #a7f3d0;
+        color: #065f46;
+      }
+
+      /* Layout 2 Kolom Seimbang */
+      .main-layout {
+        display: grid;
+        grid-template-columns: 360px 1fr;
+        gap: 16px;
+        flex: 1;
+        min-height: 0; /* Penting agar flex child bisa scroll jika overflow */
+      }
+
+      .left-column {
+        display: flex;
+        flex-direction: column;
+        gap: 16px;
+      }
+
+      /* Stats Cards Abu-abu Pas */
+      .stats-grid {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 12px;
+      }
+
+      .stat-card {
+        background-color: #f3f4f6;
+        border: 1px solid #e5e7eb;
+        padding: 12px;
+        border-radius: 10px;
+        text-align: center;
+      }
+
+      .stat-card h3 {
+        font-size: 0.85rem;
+        color: #4b5563;
+        margin-bottom: 2px;
+      }
+
+      .stat-card p {
+        font-size: 1.5rem;
+        font-weight: bold;
+        color: #4f46e5;
+      }
+
+      /* Card Container Abu-abu Terang */
+      .form-section,
+      .list-section {
+        background-color: #f9fafb;
+        border: 1px solid #e5e7eb;
+        padding: 16px;
+        border-radius: 12px;
+        display: flex;
+        flex-direction: column;
+      }
+
+      .list-section {
+        min-height: 0; /* Supaya scroll hanya di dalam daftar */
+      }
+
+      .form-section h2,
+      .list-section h2 {
+        font-size: 1.1rem;
+        color: #111827;
+        margin-bottom: 12px;
+        border-bottom: 2px solid #e5e7eb;
+        padding-bottom: 6px;
+      }
+
+      .form-group {
+        display: flex;
+        flex-direction: column;
+        gap: 6px;
+        margin-bottom: 12px;
+      }
+
+      .form-group label {
+        font-size: 0.85rem;
+        font-weight: 600;
+        color: #374151;
+      }
+
+      .form-group input {
+        padding: 8px 12px;
+        border-radius: 8px;
+        border: 1px solid #d1d5db;
+        background-color: #ffffff;
+        color: #111827;
+        outline: none;
+        font-size: 0.9rem;
+      }
+
+      .form-group input:focus {
+        border-color: #4f46e5;
+        box-shadow: 0 0 0 3px rgba(79, 70, 229, 0.1);
+      }
+
+      .button-group {
+        display: flex;
+        gap: 8px;
+      }
+
+      .btn {
+        padding: 8px 14px;
+        border: none;
+        border-radius: 8px;
+        cursor: pointer;
+        font-weight: 600;
+        font-size: 0.85rem;
+        transition: all 0.2s;
+      }
+
+      .btn:hover {
+        opacity: 0.9;
+      }
+
+      .btn-primary {
+        background-color: #4f46e5;
+        color: #ffffff;
+      }
+      .btn-secondary {
+        background-color: #6b7280;
+        color: #ffffff;
+      }
+      .btn-warning {
+        background-color: #f59e0b;
+        color: #ffffff;
+        padding: 6px 10px;
+        font-size: 0.8rem;
+      }
+      .btn-danger {
+        background-color: #ef4444;
+        color: #ffffff;
+        padding: 6px 10px;
+        font-size: 0.8rem;
+      }
+
+      .hidden {
+        display: none;
+      }
+
+      /* Grid Daftar Siswa (Auto scroll internal jika murid sangat banyak) */
+      .student-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+        gap: 10px;
+        overflow-y: auto;
+        padding-right: 4px;
+        align-content: start;
+      }
+
+      /* Card Siswa Abu-abu Pas */
+      .student-card {
+        background-color: #e5e7eb;
+        border: 1px solid #d1d5db;
+        padding: 12px;
+        border-radius: 10px;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+      }
+
+      .student-info h4 {
+        font-size: 0.95rem;
+        color: #111827;
+      }
+
+      .student-info p {
+        color: #374151;
+        font-size: 0.85rem;
+        margin-bottom: 8px;
+      }
+
+      .student-actions {
+        display: flex;
+        gap: 6px;
+      }
+
+      .empty-state {
+        grid-column: 1 / -1;
+        text-align: center;
+        color: #9ca3af;
+        padding: 30px 0;
+        font-size: 0.9rem;
+      }
+
+      @keyframes fadeIn {
+        from {
+          opacity: 0;
+          transform: translateY(-3px);
+        }
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <header>
+        <h1>🎯 HSI Student Management</h1>
+        <p>Aplikasi CRUD Data Siswa Sederhana</p>
+      </header>
+
+      <div id="alertContainer"></div>
+
+      <div class="main-layout">
+        <!-- Kolom Kiri -->
+        <div class="left-column">
+          <div class="stats-grid">
+            <div class="stat-card">
+              <h3>Total Siswa</h3>
+              <p id="totalStudents">0</p>
+            </div>
+            <div class="stat-card">
+              <h3>Rata-rata Nilai</h3>
+              <p id="averageScore">0</p>
+            </div>
+          </div>
+
+          <section class="form-section">
+            <h2 id="formTitle">➕ Tambah Siswa Baru</h2>
+            <form id="studentForm">
+              <input type="hidden" id="studentId" value="" />
+
+              <div class="form-group">
+                <label for="studentName">Nama Siswa</label>
+                <input type="text" id="studentName" placeholder="Masukkan nama..." required />
+              </div>
+
+              <div class="form-group">
+                <label for="studentScore">Nilai</label>
+                <input type="number" id="studentScore" placeholder="Nilai (0-100)" min="0" max="100" required />
+              </div>
+
+              <div class="button-group">
+                <button type="submit" id="btnSubmit" class="btn btn-primary">➕ Tambah Siswa</button>
+                <button type="button" id="btnCancel" class="btn btn-secondary hidden">❌ Batal</button>
+              </div>
+            </form>
+          </section>
+        </div>
+
+        <!-- Kolom Kanan -->
+        <section class="list-section">
+          <h2>📋 Daftar Siswa</h2>
+          <div id="studentList" class="student-grid">
+            <!-- Data dinamis -->
+          </div>
+        </section>
+      </div>
+    </div>
+
+    <script src="script.js"></script>
+  </body>
+</html>
