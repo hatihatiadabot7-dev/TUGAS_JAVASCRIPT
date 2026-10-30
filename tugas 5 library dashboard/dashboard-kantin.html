@@ -1,0 +1,116 @@
+<!doctype html>
+<html lang="id" data-theme="light:light dark:dark spacing:spacing typography:typography shape:shape" data-color-mode="light">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Dashboard Kantin HSI</title>
+<script>
+(function(){
+  let m=null;try{m=localStorage.getItem('kantin-color-mode');}catch(e){}
+  if(m!=='light'&&m!=='dark') m=matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light';
+  document.documentElement.setAttribute('data-color-mode',m);
+})();
+</script>
+
+<!-- Atlassian Design System: CSS reset -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@atlaskit/css-reset@8.4.3/dist/bundle.css">
+<!-- CSS library -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/tom-select@2/dist/css/tom-select.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr@4/dist/flatpickr.min.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/tabulator-tables@6/dist/css/tabulator.min.css">
+
+<!-- Custom Stylesheet -->
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<div class="app">
+  <!-- ===== Sidebar ===== -->
+  <aside class="side">
+    <div class="brand">
+      <span class="brand-tile"><svg class="ic" viewBox="0 0 24 24"><path d="M3.5 9l1.8-5h13.4l1.8 5"/><path d="M3.5 9h17v1.5a2.8 2.8 0 0 1-5.6 0 2.8 2.8 0 0 1-5.8 0 2.8 2.8 0 0 1-5.6 0z"/><path d="M5 13.5V21h14v-7.5"/><path d="M10 21v-4.5h4V21"/></svg></span>
+      <div><b>Kantin HSI-BS</b><small>HSI Boarding School</small></div>
+    </div>
+    <div>
+      <div class="nav-h">Menu</div>
+      <nav class="nav" aria-label="Navigasi utama">
+        <a aria-current="page"><svg class="ic" viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="9" rx="1.5"/><rect x="14" y="3" width="7" height="5" rx="1.5"/><rect x="14" y="12" width="7" height="9" rx="1.5"/><rect x="3" y="16" width="7" height="5" rx="1.5"/></svg>Dashboard</a>
+        <a><svg class="ic" viewBox="0 0 24 24"><path d="M21 8l-9-5-9 5 9 5z"/><path d="M3 8v8l9 5 9-5V8"/><path d="M12 13v8"/></svg>Produk</a>
+        <a><svg class="ic" viewBox="0 0 24 24"><path d="M14 3H6.5A1.5 1.5 0 0 0 5 4.5v15A1.5 1.5 0 0 0 6.5 21h11a1.5 1.5 0 0 0 1.5-1.5V8z"/><path d="M14 3v5h5M9 13h6M9 17h6"/></svg>Laporan</a>
+        <a><svg class="ic" viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.7 1.7 0 0 0 .3 1.8l.1.1a2 2 0 1 1-2.8 2.8l-.1-.1a1.7 1.7 0 0 0-1.8-.3 1.7 1.7 0 0 0-1 1.5V21a2 2 0 1 1-4 0v-.1a1.7 1.7 0 0 0-1.1-1.5 1.7 1.7 0 0 0-1.8.3l-.1.1a2 2 0 1 1-2.8-2.8l.1-.1a1.7 1.7 0 0 0 .3-1.8 1.7 1.7 0 0 0-1.5-1H3a2 2 0 1 1 0-4h.1a1.7 1.7 0 0 0 1.5-1.1 1.7 1.7 0 0 0-.3-1.8l-.1-.1a2 2 0 1 1 2.8-2.8l.1.1a1.7 1.7 0 0 0 1.8.3H9a1.7 1.7 0 0 0 1-1.5V3a2 2 0 1 1 4 0v.1a1.7 1.7 0 0 0 1 1.5 1.7 1.7 0 0 0 1.8-.3l.1-.1a2 2 0 1 1 2.8 2.8l-.1.1a1.7 1.7 0 0 0-.3 1.8V9a1.7 1.7 0 0 0 1.5 1H21a2 2 0 1 1 0 4h-.1a1.7 1.7 0 0 0-1.5 1z"/></svg>Pengaturan</a>
+      </nav>
+    </div>
+    <div class="side-foot">
+      <button class="btn subtle" id="btnTheme" type="button"><svg class="ic" viewBox="0 0 24 24"><path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8z"/></svg><span>Mode gelap</span></button>
+    </div>
+  </aside>
+
+  <!-- ===== Konten ===== -->
+  <main class="main">
+    <header class="page-head">
+      <div>
+        <nav class="crumbs" aria-label="Breadcrumb"><a href="#">Kantin HSI-BS</a><span>/</span><span>Dashboard</span></nav>
+        <h1>Dashboard Kantin</h1>
+        <p class="sub" id="dRange">-</p>
+      </div>
+      <div class="filters">
+        <div class="field">
+          <label for="fDate">Tanggal</label>
+          <div class="textfield">
+            <svg class="ic" viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="16" rx="2"/><path d="M8 3v4M16 3v4M3 10h18"/></svg>
+            <input id="fDate" placeholder="Pilih rentang tanggal" readonly>
+          </div>
+        </div>
+        <div class="field">
+          <label for="fKat">Kategori</label>
+          <select id="fKat" multiple></select>
+        </div>
+      </div>
+    </header>
+
+    <section class="kpis" aria-label="Ringkasan">
+      <div class="card kpi">
+        <div class="kpi-h"><span class="kpi-ico blue"><svg class="ic" viewBox="0 0 24 24"><rect x="2.5" y="6" width="19" height="12" rx="2"/><circle cx="12" cy="12" r="2.5"/><path d="M6 9.5v5M18 9.5v5"/></svg></span>Omzet
+          <button class="icon-btn" type="button" data-tip="Total uang masuk (harga × jumlah) dalam rentang tanggal & kategori terpilih." aria-label="Info Omzet"><svg class="ic" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 11v5M12 8h.01"/></svg></button></div>
+        <div class="kpi-v" id="kOmzet">-</div><div class="kpi-c" id="cOmzet">&nbsp;</div>
+      </div>
+      <div class="card kpi">
+        <div class="kpi-h"><span class="kpi-ico green"><svg class="ic" viewBox="0 0 24 24"><path d="M5 8h14l-1.3 11.1a2 2 0 0 1-2 1.9H8.3a2 2 0 0 1-2-1.9z"/><path d="M9 8V6a3 3 0 0 1 6 0v2"/></svg></span>Item terjual
+          <button class="icon-btn" type="button" data-tip="Jumlah porsi/barang yang terjual pada filter saat ini." aria-label="Info Item terjual"><svg class="ic" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 11v5M12 8h.01"/></svg></button></div>
+        <div class="kpi-v" id="kItem">-</div><div class="kpi-c" id="cItem">&nbsp;</div>
+      </div>
+      <div class="card kpi">
+        <div class="kpi-h"><span class="kpi-ico purple"><svg class="ic" viewBox="0 0 24 24"><path d="M6 3h12v18l-3-2-3 2-3-2-3 2z"/><path d="M9 8h6M9 12h6"/></svg></span>Transaksi
+          <button class="icon-btn" type="button" data-tip="Banyaknya catatan transaksi yang lolos filter." aria-label="Info Transaksi"><svg class="ic" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 11v5M12 8h.01"/></svg></button></div>
+        <div class="kpi-v" id="kTrx">-</div><div class="kpi-c" id="cTrx">&nbsp;</div>
+      </div>
+    </section>
+
+    <section class="row-2">
+      <div class="card"><div class="card-h"><h2>Omzet per hari</h2><small>Rupiah</small></div><div class="chart-wrap"><canvas id="cBar" aria-label="Grafik omzet per hari"></canvas></div></div>
+      <div class="card"><div class="card-h"><h2>Item per kategori</h2><small>Porsi</small></div><div class="chart-wrap"><canvas id="cDn" aria-label="Grafik item per kategori"></canvas></div></div>
+    </section>
+
+    <section class="row-2">
+      <div class="card"><div class="card-h"><h2>Produk</h2><small id="tCount"></small></div><div id="tProd"></div></div>
+      <div class="card"><div class="card-h"><h2>Promo minggu ini</h2><small id="pCount"></small></div>
+        <ul class="promo" id="promo"></ul>
+      </div>
+    </section>
+  </main>
+</div>
+<div class="tooltip" id="tooltip" role="tooltip"></div>
+
+<!-- Script libraries -->
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+<script src="https://cdn.jsdelivr.net/npm/@floating-ui/core@1/dist/floating-ui.core.umd.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@floating-ui/dom@1/dist/floating-ui.dom.umd.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/tom-select@2/dist/js/tom-select.complete.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/flatpickr@4/dist/flatpickr.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/flatpickr@4/dist/l10n/id.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4/dist/chart.umd.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/tabulator-tables@6/dist/js/tabulator.min.js"></script>
+
+<!-- Custom Script -->
+<script src="script.js"></script>
+</body>
+</html>
